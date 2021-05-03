@@ -16,20 +16,52 @@ db.create_all()
 
 @app.route("/api/cupcakes")
 def list_all_cupcakes():
+    """Lists all cupcakes
+
+        response should look like:
+        [{"id": 1, 
+        "flavor": "chocolate", 
+        "size": "small", 
+        "rating": 10, 
+        "image": "imageurl.com"}, 
+
+        {"id": 1, 
+        "flavor": "chocolate", 
+        "size": "small", 
+        "rating": 10, 
+        "image": "imageurl.com"}]
+    """
+    # example of response data in docstring
     cupcakes = Cupcake.query.all()
     serialized = [c.serialize() for c in cupcakes]
 
-    return jsonify(cupcakes = serialized)
+    return jsonify(cupcakes=serialized)
 
 @app.route("/api/cupcakes/<int:cupcake_id>")
 def get_cupcake_details(cupcake_id):
+    """Shows the details of a specific cupcake
+    
+        response should look like:
+
+        {"id": 1, 
+        "flavor": "chocolate", 
+        "size": "small", 
+        "rating": 10, 
+        "image": "imageurl.com"}
+    """
+
     cupcake = Cupcake.query.get_or_404(cupcake_id)
     serialized = cupcake.serialize()
 
-    return jsonify(cupcake = serialized)
+    return jsonify(cupcake=serialized)
 
 @app.route("/api/cupcakes", methods=["POST"])
 def create_cupcake():
+    """Creates a new cupcake with input from user
+    
+    
+    """
+
     flavor = request.json["flavor"]
     size = request.json["size"]
     rating = request.json["rating"]
