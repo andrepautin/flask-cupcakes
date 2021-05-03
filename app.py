@@ -73,3 +73,42 @@ def create_cupcake():
     serialized = cupcake.serialize()
     
     return (jsonify(cupcake=serialized), 201)
+
+
+@app.route("/api/cupcakes/<int:cupcake_id>", methods=["PATCH"])
+def update_cupcake(cupcake_id):
+    """ updates a cupcake with specified ID - input should be json of 
+        attributes of cupcake to be changed IE
+        {
+            "flavor":"raspberry"
+            "size":"small"
+        }
+        changes made are to object attributes """
+
+    resp = request.json
+    cupcake = Cupcake.query.get_or_404(cupcake_id)
+
+    cupcake.flavor = resp["flavor"],
+    cupcake.size = resp["size"],
+    cupcake.rating = resp["rating"],
+    cupcake.image = resp["image"]
+    
+
+    db.session.commit()
+    serialized = cupcake.serialize()
+
+    return jsonify(cupcake=serialized)
+
+
+@app.route("/api/cupcakes/<int:cupcake_id>", methods=["DELETE"])
+def delete_cupcake(cupcake_id):
+    """ Deletes cupcake with specified cupcake ID or returns
+        404 if cupcake not found """
+    
+    cupcake = Cupcake.query.get_or_404(cupcake_id)
+    db.session.delete(cupcake)
+
+    db.session.commit()
+    return jsonify(message="Deleted")
+
+    
