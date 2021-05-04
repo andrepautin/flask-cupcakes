@@ -49,6 +49,8 @@ class CupcakeViewsTestCase(TestCase):
         db.session.rollback()
 
     def test_list_cupcakes(self):
+        """ should successfully return a list of cupcake objects """
+
         with app.test_client() as client:
             resp = client.get("/api/cupcakes")
 
@@ -68,6 +70,8 @@ class CupcakeViewsTestCase(TestCase):
             })
 
     def test_get_cupcake(self):
+        """ should return cupcake details """
+
         with app.test_client() as client:
             url = f"/api/cupcakes/{self.cupcake.id}"
             resp = client.get(url)
@@ -85,6 +89,8 @@ class CupcakeViewsTestCase(TestCase):
             })
 
     def test_create_cupcake(self):
+        """ should create a new cupcake instance """
+
         with app.test_client() as client:
             url = "/api/cupcakes"
             resp = client.post(url, json=CUPCAKE_DATA_2)
@@ -107,3 +113,33 @@ class CupcakeViewsTestCase(TestCase):
             })
 
             self.assertEqual(Cupcake.query.count(), 2)
+
+    def test_update_cupcake(self):
+        """ should update attribute(s) of a cupcake """
+
+        with app.test_client() as client:
+            url = f"/api/cupcakes/{self.cupcake.id}"
+            resp = client.patch(url, json={"flavor": "TestFlavor3", 
+                                           "size": "TestSize3", 
+                                           "rating": 10, 
+                                           "image": "http://test.com/cupcake2.jpg"})
+            data = resp.json
+            self.assertEqual({'cupcake': {
+                                    'id': self.cupcake.id, 
+                                    'flavor': 'TestFlavor3', 
+                                    'size': 'TestSize3', 
+                                    'rating': 10, 
+                                    'image': 'http://test.com/cupcake2.jpg'}
+                                    }, data)
+            self.assertEqual(resp.status_code, 200)
+
+    def test_delete_cupcake(self):
+        """ should delete this cupcake instance """
+
+        with app.test_client() as client:
+            url = f"/api/cupcakes/{self.cupcake.id}"
+            resp = client.delete(url)
+
+            data = resp.json["message"]
+
+            self.assertIn('Deleted', data)

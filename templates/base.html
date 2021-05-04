@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cupcakes</title>
+</head>
+<body>
+    <ul class="cupcakes-list">
+    </ul>
+    <form class="create-cupcake-form">
+        <div>
+            <label for="flavor">Flavor</label>
+            <input name="flavor" type="text" id="flavor">
+        </div>
+        <div>
+            <label for="size">Size</label>
+            <input name= "size" type="text" id="size">
+        </div>
+        <div>
+            <label for="rating">Rating</label>
+            <input name="rating" type="text" id="rating">
+        </div>
+        <div>
+            <label for="image">Image</label>
+            <input name="image" type="url" id="rating">
+        </div>
+        <button type="submit">Add Cupcake</button>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="/static/handle_cupcakes.js"></script>
+</body>
+</html>
