@@ -5,14 +5,14 @@ from models import db, connect_db, Cupcake
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = "secret"
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///cupcakes"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = "secret"
 
 toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
-db.create_all()
+# db.create_all()
 
 @app.route("/")
 def root():
@@ -77,11 +77,12 @@ def create_cupcake():
          "rating": 10, 
          "image": "imageurl.com"}
     """
+    data = request.json
 
-    flavor = request.json["flavor"]
-    size = request.json["size"]
-    rating = request.json["rating"]
-    image = request.json["image"]
+    flavor = data["flavor"]
+    size = data["size"]
+    rating = data["rating"]
+    image = data["image"] or None
 
     cupcake = Cupcake(flavor=flavor, size=size, rating=rating, image=image)
     db.session.add(cupcake)
@@ -126,7 +127,7 @@ def update_cupcake(cupcake_id):
     cupcake.rating = data["rating"]
     cupcake.image = data["image"]
     
-
+    db.session.add(cupcake)
     db.session.commit()
     serialized = cupcake.serialize()
 

@@ -9,22 +9,24 @@
 <body>
     <ul class="cupcakes-list">
     </ul>
-    <form class="create-cupcake-form">
+
+    <h2>Add a new cupcake!</h2>
+    <form id="create-cupcake-form">
         <div>
-            <label for="flavor">Flavor</label>
-            <input name="flavor" type="text" id="flavor">
+            <label for="form-flavor">Flavor</label>
+            <input name="flavor" type="text" id="form-flavor">
         </div>
         <div>
-            <label for="size">Size</label>
-            <input name= "size" type="text" id="size">
+            <label for="form-size">Size</label>
+            <input name= "size" type="text" id="form-size">
         </div>
         <div>
-            <label for="rating">Rating</label>
-            <input name="rating" type="text" id="rating">
+            <label for="form-rating">Rating</label>
+            <input type="number" name="rating" type="text" id="form-rating">
         </div>
         <div>
-            <label for="image">Image</label>
-            <input name="image" type="url" id="rating">
+            <label for="form-image">Image</label>
+            <input name="image" type="url" id="form-image">
         </div>
         <button type="submit">Add Cupcake</button>
     </form>
